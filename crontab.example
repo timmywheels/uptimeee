@@ -1,0 +1,14 @@
+# from the server on which you'd like to execute this script at a given interval, run this command:
+crontab -e
+
+# then define the cronjob like so (or however you see fit):
+
+* * * * * /path/to/python /path/to/main.py >/dev/null 2>&1
+
+# refer to this SO post regarding '>/dev/null 2>&1'
+https://unix.stackexchange.com/a/163359
+
+
+
+
+
