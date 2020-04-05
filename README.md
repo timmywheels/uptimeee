@@ -5,7 +5,15 @@ This project will periodically check the uptime of any URLs that are defined in 
 ### Getting started
 Install dependencies by running `pip3 install -r requirements.txt`
 
-Create a `.env` file, paste the contents of `.env.example` into it, and fill in the necessary values
+Create a `.env` file, paste the contents of `.env.example` into it, and fill in the necessary values for the environment variables.
+
+##### Environment Variables
+- `SENDGRID_API_KEY`: Your Sendgrid API key
+- `SENDGRID_DOWN_TEMPLATE_ID`: The Sendgrid template id for the template to be used for when a 'site down' alert is sent
+- `SENDGRID_UP_TEMPLATE_ID`: The Sendgrid template id for the template to be used for when a 'site is back up' alert is sent
+- `SENDGRID_FROM_EMAIL`: The email from which the Sendgrid emails will be sent
+- `SENDGRID_TO_EMAIL`: The email to which the Sendgrid emails will be sent
+
 
 Add sites to `db.json` - see below.
 
