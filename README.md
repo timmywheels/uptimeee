@@ -47,7 +47,7 @@ On the machine that will be executing the script, run the command `crontab -e` w
 
 Define the cronjob like so (or however you see fit):
 
-`* * * * * /path/to/project /path/to/python3 /path/to/project/main.py > /dev/null 2>&1`
+`* * * * * cd /path/to/project && /path/to/python3 /path/to/project/main.py > /dev/null 2>&1`
 
 Example:
 `* * * * * cd /root/dev/uptimeee && /usr/bin/python3 /root/dev/uptimeee/main.py > /dev/null 2>&1`
