@@ -60,7 +60,7 @@ Check out [crontab.guru](https://crontab.guru/#*_*_*_*_*) or [crontab-generator.
 ### Setting up the email alerts
 This application utilizes the Sendgrid API to send email alerts when an outage has been detected. You will need to register for a [SendGrid](https://sendgrid.com) account and generate your API key to get started. 
 
-You will then want to create a [transactional template](https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/) using the variables that are passed into the `message.dynamic_template_data` in `main.py`.
+You will then want to create a [transactional template](https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/) (or two - perhaps one for the initial email alert, and another for when the site is back up) using the variables that are passed into the `message.dynamic_template_data` in `main.py`.
 ```python
     # example dynamic data in main.py
     message.dynamic_template_data = {
@@ -70,7 +70,7 @@ You will then want to create a [transactional template](https://sendgrid.com/doc
     }
 ```
 
-Then you can reference those variable in the HTML of your email template using the [Handlebars.js Syntax](https://handlebarsjs.com/guide/#what-is-handlebars) like so:
+Then you can reference those variables in the HTML of your email template using the [Handlebars.js Syntax](https://handlebarsjs.com/guide/#what-is-handlebars) like so:
 
 ```html
 <!-- example sendgrid html email using dynamic data -->
