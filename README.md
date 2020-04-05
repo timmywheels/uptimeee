@@ -1,13 +1,13 @@
 # Uptimeee.com
 
-This project will periodically check the uptime of any URLs that are defined in `urls.txt` via the HTTP response code.
+This project will periodically check the uptime of any URLs that are defined in `db.json` via the HTTP response code. If any none `200` HTTP response is returned, an alert email will be triggered.
 
 ### Getting started
-Install dependencies by running `pip install -r requirements.txt`
-
-Add urls that you'd like to monitor to `urls.txt`
+Install dependencies by running `pip3 install -r requirements.txt`
 
 Create a `.env` file, paste the contents of `.env.example` into it, and fill in the necessary values
+
+Add sites to `db.json` - see below.
 
 ### Adding sites to monitor
 This project utilizes a lightweight database called [`tinydb`](https://tinydb.readthedocs.io/en/latest/). The schema for each database record is as follows:
@@ -42,16 +42,17 @@ Example database:
 }
 ```
 
- 
-
 ### Setting up the cronjob
 On the machine that will be executing the script, run the command `crontab -e` which will allow you to edit the crontab file. 
 
 Define the cronjob like so (or however you see fit):
 
-`* * * * * /path/to/python /path/to/main.py >/dev/null 2>&1`
+`* * * * * /path/to/project /path/to/python3 /path/to/project/main.py > /dev/null 2>&1`
 
-In this example, the cronjob - `* * * * *` - will execute `python3 main.py` every minute, and discard any output such as print statements as denoted by `>/dev/null 2>&1` 
+Example:
+`* * * * * cd /root/dev/uptimeee && /usr/bin/python3 /root/dev/uptimeee/main.py > /dev/null 2>&1`
+
+In this example, the cronjob - `* * * * *` - will execute `python3 main.py` every minute, and discard any output such as print statements as denoted by `> /dev/null 2>&1` 
 
 Check out [crontab.guru](https://crontab.guru/#*_*_*_*_*) or [crontab-generator.org](https://crontab-generator.org/) for more info on defining cronjob intervals.
 
@@ -64,12 +65,18 @@ You will then want to create a transactional template using the variables that a
 ```python
     # example dynamic data in main.py
     message.dynamic_template_data = {
+        'name': name,
         'url': url,
+        'status': status # 
     }
 ```
 
 
 ```html
-<!-- example sendgrid html using dynamic data -->
-<h1>Uh oh! {{url}} appears to be down...</h1>
+<!-- example sendgrid html email using dynamic data -->
+<html>
+    <h1>Uh oh! {{name}} appears to be {{status}}...</h1>
+    <a href="{{url}}">See For Yourself</a>
+</html>
+
 ```

@@ -2,17 +2,17 @@
   "_default": {
     "1": {
       "name": "sendpoint.io",
-      "url": "https://sendpoint.io",
+      "url": "https://api.sendpoint.io/api/health-check",
       "status": "up",
       "incident_start": "",
       "incident_end": ""
     },
     "2": {
-      "name": "CareerDevs",
-      "url": "http://careerdevs.com",
+      "name": "Google",
+      "url": "https://google.com",
       "status": "up",
-      "incident_start": "",
-      "incident_end": ""
+      "incident_start": "2020-04-04 14:16:06.458161",
+      "incident_end": "2020-04-04 14:18:27.613420"
     }
   }
 }
