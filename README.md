@@ -66,7 +66,7 @@ You will then want to create a [transactional template](https://sendgrid.com/doc
     message.dynamic_template_data = {
         'name': name,
         'url': url,
-        'status': status # 
+        'status': status
     }
 ```
 
