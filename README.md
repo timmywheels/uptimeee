@@ -1,4 +1,4 @@
-# Uptimeee.com (coming soon)
+# Uptimeee
 
 This project will periodically check the uptime of any URLs that are defined in `db.json` via the HTTP response code. If any none `200` HTTP response is returned, an alert email will be triggered.
 
