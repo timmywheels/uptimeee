@@ -11,7 +11,7 @@ Add sites to `db.json` - see below.
 
 ### Adding sites to monitor
 This project utilizes a lightweight database called [`tinydb`](https://tinydb.readthedocs.io/en/latest/). The schema for each database record is as follows:
-- `name`: The name of the 'friendly name' of the site, project, or application to be monitored
+- `name`: The 'friendly name' of the site, project, or application to be monitored
 - `url`: The URL that will be monitored for uptime
 - `status`: The current status of the `url` - either `up` or `down`
 - `incident_start`: The datetime at which the site went down
