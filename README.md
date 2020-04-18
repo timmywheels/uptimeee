@@ -8,6 +8,8 @@ Install dependencies by running `pip3 install -r requirements.txt`
 Create a `.env` file, paste the contents of `.env.example` into it, and fill in the necessary values for the environment variables.
 
 ##### Environment Variables
+- `UPTIME_POLL_INTERVAL`: The interval (in minutes) that you've specified for the cronjob to run the script
+- `INCIDENT_ALERT_INTERVAL`: How often (in minutes) to send an email alert while a site is still down
 - `SENDGRID_API_KEY`: Your Sendgrid API key
 - `SENDGRID_DOWN_TEMPLATE_ID`: The Sendgrid template id for the template to be used for when a 'site down' alert is sent
 - `SENDGRID_UP_TEMPLATE_ID`: The Sendgrid template id for the template to be used for when a 'site is back up' alert is sent
@@ -24,6 +26,7 @@ This project utilizes a lightweight database called [`tinydb`](https://tinydb.re
 - `status`: The current status of the `url` - either `up` or `down`
 - `incident_start`: The datetime at which the site went down
 - `incident_end`: The datetime at which service was restored for the site
+- `incident_length`: The length of time (in minutes) of the ongoing incident
 
 Make sure to populate the `name` and `url` fields with the relevant info.  The `status` field should be set to `up`. You will also need to add the `incident_start` and `incident_end` fields, but make sure they're set to empty strings.
 
@@ -37,14 +40,16 @@ Example database:
       "url": "https://sendpoint.io",
       "status": "up",
       "incident_start": "",
-      "incident_end": ""
+      "incident_end": "",
+      "incident_length": 0
     },
     "2": {
       "name": "CareerDevs",
       "url": "http://careerdevs.com",
       "status": "up",
       "incident_start": "",
-      "incident_end": ""
+      "incident_end": "",
+      "incident_length": 0
     }
   }
 }
