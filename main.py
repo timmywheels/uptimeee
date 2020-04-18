@@ -8,11 +8,12 @@ from mailer import send_alert_email
 db = TinyDB('db.json')
 items = db.all()
 
-UPTIME_POLL_INTERVAL = os.getenv('UPTIME_POLL_INTERVAL')
-INCIDENT_ALERT_INTERVAL = os.getenv('INCIDENT_ALERT_INTERVAL')
-
 
 def monitor_uptime():
+
+    uptime_poll_interval = os.getenv('UPTIME_POLL_INTERVAL')
+    incident_alert_interval = int(os.getenv('INCIDENT_ALERT_INTERVAL'))
+
     for item in items:
 
         name = item['name']
@@ -37,10 +38,11 @@ def monitor_uptime():
         # no need to continue sending emails
         # unless incident has reached specified alert interval
         elif res.status_code != 200 and status == 'down':
-            if incident_length % INCIDENT_ALERT_INTERVAL == 0:
+            if incident_length > 0 and incident_length % incident_alert_interval == 0:
                 send_alert_email(name, url, status, incident_start)
             print('[ALERT] {} is still down...'.format(name))
-            item['incident_length'] = incident_length + UPTIME_POLL_INTERVAL
+            print()
+            item['incident_length'] = incident_length + int(uptime_poll_interval)
 
         # site is back up
         elif res.status_code == 200 and status == 'down':
@@ -51,7 +53,7 @@ def monitor_uptime():
             send_alert_email(name, url, status, incident_start, incident_end)
             print("{} is back up:".format(name))
 
-            # reset start/end values after email alert has been sent
+            # reset values after email alert has been sent
             item['incident_start'] = ''
             item['incident_end'] = ''
             item['incident_length'] = 0

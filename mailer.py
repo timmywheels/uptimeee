@@ -4,10 +4,12 @@ from sendgrid.helpers.mail import Mail
 
 
 def send_alert_email(name, url, status, incident_start="", incident_end=""):
+
     message = Mail(
-        from_email=os.getenv('FROM_EMAIL'),
-        to_emails=os.getenv('TO_EMAIL')
+        from_email=os.getenv('SENDGRID_FROM_EMAIL'),
+        to_emails=os.getenv('SENDGRID_TO_EMAIL')
     )
+
     message.dynamic_template_data = {
         'name': name,
         'url': url,
