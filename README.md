@@ -5,7 +5,9 @@ This project will periodically check the uptime of any URLs that are defined in 
 ### Getting started
 Install dependencies by running `pip3 install -r requirements.txt`
 
+Create a `db.json` file, paste the contents of `db.example.json` into it and update it with the details of the sites to be monitored.
 Create a `.env` file, paste the contents of `.env.example` into it, and fill in the necessary values for the environment variables.
+
 
 ##### Environment Variables
 - `UPTIME_POLL_INTERVAL`: The interval (in minutes) that you've specified for the cronjob to run the script
@@ -44,8 +46,8 @@ Example database:
       "incident_length": 0
     },
     "2": {
-      "name": "CareerDevs",
-      "url": "http://careerdevs.com",
+      "name": "Google",
+      "url": "https://google.com",
       "status": "up",
       "incident_start": "",
       "incident_end": "",
@@ -68,6 +70,8 @@ Example:
 In this example, the cronjob - `* * * * *` - will execute `python3 main.py` every minute, and discard any output such as print statements as denoted by `> /dev/null 2>&1` 
 
 Check out [crontab.guru](https://crontab.guru/#*_*_*_*_*) or [crontab-generator.org](https://crontab-generator.org/) for more info on defining cronjob intervals.
+
+*NOTE:* Be sure that the `UPTIME_POLL_INTERVAL` environment variable in the `.env` file matches the cronjob interval
 
 
 ### Setting up the email alerts
