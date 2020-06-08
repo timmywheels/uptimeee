@@ -1,6 +1,15 @@
 import os
+import logging
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def send_alert_email(name, url, status, incident_start="", incident_end=""):
@@ -23,6 +32,6 @@ def send_alert_email(name, url, status, incident_start="", incident_end=""):
     try:
         sendgrid_client = SendGridAPIClient(api_key=os.getenv('SENDGRID_API_KEY'))
         response = sendgrid_client.send(message)
-        print('{} alert for {} successfully sent...'.format(status, name))
+        logger.error('{} alert for {} successfully sent...'.format(status, name))
     except Exception as e:
-        print(e)
+        logger.error(e)

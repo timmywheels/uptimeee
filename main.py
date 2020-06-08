@@ -1,5 +1,6 @@
 import os
 import requests
+import logging
 from tinydb import TinyDB
 from dotenv import load_dotenv
 from datetime import datetime
@@ -7,6 +8,14 @@ from mailer import send_alert_email
 
 db = TinyDB('db.json')
 items = db.all()
+
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def monitor_uptime():
@@ -32,7 +41,7 @@ def monitor_uptime():
             item['incident_start'] = str(datetime.now())
             incident_start = item['incident_start']
             send_alert_email(name, url, status, incident_start)
-            print('ALERT: {} is down'.format(name))
+            logger.error('ALERT: {} is down'.format(name))
 
         # subsequent down detections
         # no need to continue sending emails
@@ -40,8 +49,7 @@ def monitor_uptime():
         elif res.status_code != 200 and status == 'down':
             if incident_length > 0 and incident_length % incident_alert_interval == 0:
                 send_alert_email(name, url, status, incident_start)
-            print('[ALERT] {} is still down...'.format(name))
-            print()
+            logger.info('[ALERT] {} is still down...'.format(name))
             item['incident_length'] = incident_length + int(uptime_poll_interval)
 
         # site is back up
@@ -51,7 +59,7 @@ def monitor_uptime():
             status = item['status']
             incident_end = item['incident_end']
             send_alert_email(name, url, status, incident_start, incident_end)
-            print("{} is back up:".format(name))
+            logger.info("{} is back up:".format(name))
 
             # reset values after email alert has been sent
             item['incident_start'] = ''
@@ -59,7 +67,7 @@ def monitor_uptime():
             item['incident_length'] = 0
 
         else:
-            print('{} is up...'.format(name))
+            logger.info('{} is up...'.format(name))
 
     db.write_back(items)
 
