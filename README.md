@@ -46,8 +46,8 @@ Example database:
       "incident_length": 0
     },
     "2": {
-      "name": "Google",
-      "url": "https://google.com",
+      "name": "scooped.io",
+      "url": "https://scooped.io",
       "status": "up",
       "incident_start": "",
       "incident_end": "",
