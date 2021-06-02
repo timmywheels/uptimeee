@@ -15,4 +15,4 @@ python-http-client==3.2.7
 requests==2.23.0
 sendgrid==6.2.1
 six==1.14.0
-urllib3==1.25.8
+urllib3==1.26.5
